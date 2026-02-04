@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  margin:0;
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.55)),
+    url("Bg.jpg") center/cover no-repeat fixed;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* vignette */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle, transparent 45%, rgba(0,0,0,.6));
+  pointer-events:none;
+}
+
+/* glass card */
+.page{
+  display:none;
+  width:92%;
+  max-width:420px;
+  padding:30px;
+  border-radius:32px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(18px);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.4);
+  animation:pageIn .6s ease;
+  position:relative;
+}
+
+.page.active{display:block}
+
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(40px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+h1{color:#2b0b3f;font-weight:800;margin-bottom:12px}
+p{font-size:1.05rem;color:#4a2a58;line-height:1.5}
+
+/* buttons */
+button{
+  padding:14px 32px;
+  border:none;
+  border-radius:50px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:.25s ease;
+}
+button:hover{transform:scale(1.06)}
+
+.yes{
+  background:linear-gradient(135deg,#ff4d8d,#ff758f);
+  color:white;
+  box-shadow:0 12px 30px rgba(255,77,141,.45);
+}
+
+.no{
+  background:#f1f1f1;
+  position:absolute;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+/* back arrow */
+.backArrow{
+  position:absolute;
+  top:18px;
+  left:18px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  cursor:pointer;
+}
+
+/* heartbeat */
+.heartbeat{animation:heartbeat 1.7s infinite}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  12%{transform:scale(1.12)}
+  24%{transform:scale(1)}
+  36%{transform:scale(1.1)}
+  70%{transform:scale(1)}
+}
+
+/* gifts */
+.gifts{
+  display:flex;
+  gap:16px;
+  margin-top:26px;
+}
+
+.gift{
+  flex:1;
+  border-radius:22px;
+  overflow:hidden;
+  cursor:pointer;
+  animation:giftFloat 2.6s ease-in-out infinite;
+  position:relative;
+
+  /* ✨ transparency magic */
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(12px);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.35);
+}
+
+.gift img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.gift::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.25),transparent);
+}
+
+.gift:nth-child(2){animation-delay:.35s}
+.gift:nth-child(3){animation-delay:.7s}
+
+@keyframes giftFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
+
+/* stickers */
+.sticker{
+  position:fixed;
+  width:44px;
+  animation:floatUp 4s linear forwards;
+}
+@keyframes floatUp{
+  to{transform:translateY(-120vh) rotate(360deg);opacity:0}
+}
+
+/* kiss */
+.kiss{
+  position:fixed;
+  width:48px;
+  animation:kissFloat 3.6s ease-out forwards;
+}
+@keyframes kissFloat{
+  from{transform:translateY(0) scale(.7);opacity:0}
+  to{transform:translateY(-120vh) scale(1.2);opacity:1}
+}
+
+/* confetti */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:14px;
+  animation:confettiFall 3s linear forwards;
+}
+@keyframes confettiFall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* collage */
+.collage{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.collage img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:18px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="MUSIC_URL" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <h2>Will you be my valentine? 💗</h2>
+  <p>
+    
+  </p>
+
+  <div style="margin-top:32px;position:relative;height:72px">
+    <button class="yes" onclick="enterGifts()">Yes ❤️</button>
+    <button class="no" id="noBtn">No 😌</button>
+  </div>
+</div>
+
+<!-- GIFTS -->
+<div class="page heartbeat" id="gifts">
+  <h1>Try opening 🎁</h1>
+  <p></p>
+
+  <div class="gifts">
+    <div class="gift" onclick="goTo('flowers')">
+      <img src="gift3.jpg">
+    </div>
+    <div class="gift" onclick="goTo('note')">
+      <img src="gift2.jpg">
+    </div>
+    <div class="gift" onclick="goTo('photos')">
+      <img src="gift1.jpg">
+    </div>
+  </div>
+</div>
+
+<!-- FLOWERS -->
+<div class="page heartbeat" id="flowers">
+  <div class="backArrow" onclick="goTo('gifts')">←</div>
+  <h1>For You...😚</h1>
+  <img src="flowers.jpg" style="width:100%;border-radius:22px;margin-top:20px">
+</div>
+
+<!-- NOTE -->
+<div class="page heartbeat" id="note">
+  <div class="backArrow" onclick="goTo('gifts')">←</div>
+  <h1>Luv u dah 🥹</h1>
+  <p>Every time you smile, my heart forgets gravity. You’re small enough to fit under my chin, yet powerful enough to own my soul, my peace, my chaos. Loving you feels like butterflies learning how to fly forever, choosing me, choosing us, every single time, without doubt, fear, hesitation, or end. 🦋💖</p>
+</div>
+
+<!-- PHOTOS -->
+<div class="page heartbeat" id="photos">
+  <div class="backArrow" onclick="goTo('gifts')">←</div>
+  <h1>Us 💞</h1>
+
+  <div class="collage">
+    <img src="1.JPG">
+    <img src="2 (2).JPG">
+    <img src="3 (2).jpg">
+    <img src="4.jpg">
+  </div>
+</div>
+
+<script>
+const noBtn=document.getElementById("noBtn");
+const music=document.getElementById("bgMusic");
+
+function moveNo(){
+  noBtn.style.transform=`translate(${Math.random()*260-130}px,${Math.random()*120-60}px)`;
+}
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+function enterGifts(){
+  music.play();
+  goTo("gifts");
+  confettiBlast();
+  kissBurst();
+}
+
+function goTo(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  spawnStickers();
+  kissBurst();
+}
+
+function spawnStickers(){
+  for(let i=0;i<6;i++){
+    const s=document.createElement("img");
+    s.src=["rose.png","heart.png","kss.png"][Math.floor(Math.random()*3)];
+    s.className="sticker";
+    s.style.left=Math.random()*100+"vw";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),4000);
+  }
+}
+
+function kissBurst(){
+  for(let i=0;i<3;i++){
+    const k=document.createElement("img");
+    k.src="kss.png";
+    k.className="kiss";
+    k.style.left=Math.random()*100+"vw";
+    document.body.appendChild(k);
+    setTimeout(()=>k.remove(),3600);
+  }
+}
+
+function confettiBlast(){
+  for(let i=0;i<50;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=["#ff4d8d","#ffd6e0","#ffffff"][Math.floor(Math.random()*3)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
